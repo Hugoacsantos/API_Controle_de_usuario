@@ -2,6 +2,8 @@
 
 namespace src;
 
+use PDO;
+
 class UserDao {
 
     public $pdo;
@@ -22,7 +24,7 @@ class UserDao {
 
     public function listAll(){
         $sql = $this->pdo->query("SELECT * FROM users");
-        $data = $sql->fetchAll();
+        $data = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
 
@@ -30,6 +32,7 @@ class UserDao {
         // var_dump($produto);
         $id = md5(time() * rand(9, 9999));
         $sql = $this->pdo->prepare("UPDATE users SET nome = :nome, email = :email WHERE id = :id");
+        // $user->nome ? $sql->bindValue(':nome',$user->nome) : '';
         $sql->bindValue(':nome',$user->nome);
         $sql->bindValue(':email',$user->email);
         $sql->bindValue(':id',$user->id);

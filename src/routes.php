@@ -15,9 +15,10 @@ $user = new UserDao($pdo);
 
 $app->get('/', function (Request $request, Response $response, $args) use ($user) {
     $list = $user->listAll();
-    var_dump($list);
-
-    return $response;
+    $list = json_encode($list);
+    // print_r(json_encode($list));
+    $response->getBody()->write($list);
+    return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
 });
 
 $app->post('/create', function (Request $request, Response $response, $args) use ($user){
@@ -28,8 +29,7 @@ $app->post('/create', function (Request $request, Response $response, $args) use
     $newUser = new User($id,$nome,$email);
     $user->create($newUser);
 
-    echo 'Inserido';
-    return $response;
+    return $response->withStatus(201);
 });
 
 $app->put('/update/{id}',function (Request $request, Response $response, $args) use ($user){
@@ -42,8 +42,7 @@ $app->put('/update/{id}',function (Request $request, Response $response, $args) 
     $newUser = new User($id,$nome,$email);
     $user->update($newUser);
 
-    echo 'Atualizado com sucesso';
-    return $response;
+    return $response->withStatus(204);
 });
 
 $app->delete('/delete/{id}',function (Request $request, Response $response, $args) use ($user){
@@ -51,8 +50,7 @@ $app->delete('/delete/{id}',function (Request $request, Response $response, $arg
 
     $user->delete($id);
 
-    echo 'Excluido';
-    return $response;
+    return $response->withStatus(200);
 });
 
 
