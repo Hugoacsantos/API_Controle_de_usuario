@@ -58,4 +58,18 @@ class UserDao {
         return false;
     }
 
+    public function findByIdWithAdress($id){
+        $sql = $this->pdo->prepare("SELECT users.*, enderecos.*
+        FROM users 
+        INNER JOIN enderecos ON enderecos.id = users.id_enderecos
+        WHERE users.id = :id");
+        $sql->bindValue(':id',$id);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch(PDO::FETCH_ASSOC);
+            return $data;
+        }
+        return false;
+    }
+
 }

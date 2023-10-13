@@ -71,6 +71,16 @@ $app->get('/user/{id}', function(Request $request, Response $response, $args) us
     return $response->withStatus(200);
 });
 
+$app->get('/{id}', function(Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
+    $id = $args['id'];
+    $user = $userServices->getWithAdress($id);
+    
+    print_r(json_encode($user));
+    
+    return $response->withStatus(200);
+
+});
+
 $app->delete('/delete/endereco/{id}', function (Request $request, Response $response, $id) {
 
     

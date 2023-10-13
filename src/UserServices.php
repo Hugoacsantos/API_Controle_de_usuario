@@ -2,6 +2,8 @@
 
 namespace src;
 
+use Exception;
+
 class UserServices
 {
 
@@ -39,6 +41,13 @@ class UserServices
 
     public function get($id){
         return $this->userDao->findById($id);
+    }
+
+    public function getWithAdress($id){
+        if($this->userDao->findById($id) === false){
+            return throw new Exception("Id de usuario nao existe");
+        }
+        return $this->userDao->findByIdWithAdress($id);
     }
 
 }
