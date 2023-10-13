@@ -14,7 +14,7 @@ class UserDao {
     }
 
     public function create(User $user){
-        $id = md5(time() * rand(9, 9999));
+        $id = md5(time().rand(9, 9999));
         $sql = $this->pdo->prepare("INSERT INTO users (id,nome,email) VALUES (:id,:nome,:email)");
         $sql->bindValue(':id',$id);
         $sql->bindValue(':nome',$user->nome);
@@ -45,6 +45,17 @@ class UserDao {
         $sql = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         $sql->bindValue(':id',$id);
         $sql->execute();
+    }
+
+    public function findById($id){
+        $sql = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+        $sql->bindValue(':id',$id);
+        $sql->execute();
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch(PDO::FETCH_ASSOC);
+            return $data;
+        }   
+        return false;
     }
 
 }
