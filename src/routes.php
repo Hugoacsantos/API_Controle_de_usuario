@@ -37,6 +37,22 @@ $app->post('/create', function (Request $request, Response $response, $args) use
     return $response->withStatus(201);
 });
 
+$app->post('/create_adress/{id}', function(Request $request, Response $response, $args) use($EnderecoServices) {
+    $iduser = $args['id'];
+    $data = $request->getParsedBody();
+    $rua = $data['rua'];
+    $numeracao = $data['numeracao'];
+    $bairro = $data['bairro'];
+    $cidade = $data['cidade'];
+    $estado = $data['estado'];
+    $endereco = new Endereco($iduser,$rua,$numeracao,$bairro,$cidade,$estado);
+
+    $EnderecoServices->create($iduser,$endereco);
+
+    return $response->withStatus(201);
+
+});
+
 $app->put('/update/{id}',function (Request $request, Response $response, $args) use ($userServices){
     $id = $args['id'];
     $data = $request->getParsedBody();

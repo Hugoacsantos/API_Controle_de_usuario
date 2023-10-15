@@ -15,7 +15,7 @@ class EnderecoServices
         $this->userDao = $userDao;
     }
 
-    public function create(Endereco $endereco){
+    public function create(string|int $id ,Endereco $endereco){
         if($this->userDao->findById($endereco->id_user) === false){
             return throw new Exception("Usuario nao existe");
         }
