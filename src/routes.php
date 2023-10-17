@@ -21,7 +21,7 @@ $EnderecoServices = new EnderecoServices($Endereco,$userDao);
 
 $app->get('/', function (Request $request, Response $response, $args) use ($userServices) {
     
-    $response->getBody()->write($userServices->listAll());
+    print_r(json_encode($userServices->listAll()));
     return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
 
 });
@@ -90,17 +90,22 @@ $app->get('/user/{id}', function(Request $request, Response $response, $args) us
 $app->get('/{id}', function(Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
     $id = $args['id'];
     $user = $userServices->getWithAdress($id);
-    
+    $addres = $EnderecoServices->listAllAdrass($id);
+
     print_r(json_encode($user));
+
     
     return $response->withStatus(200);
 
 });
 
-$app->delete('/delete/endereco/{id}', function (Request $request, Response $response, $id) {
+$app->delete('/delete/endereco/{id}', function (Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
+    $id = $args['id'];
+    $user = $userServices->get($id);
+    $EnderecoServices->find($user->id);
+    $EnderecoServices->remove($id,$user->endereco);   
 
-    
-
+    return $response->withStatus(200);
 });
 
 $app->run();

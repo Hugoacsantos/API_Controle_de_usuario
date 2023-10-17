@@ -37,4 +37,14 @@ class EnderecoDao
         return $dados;
     }
 
+    public function listAll($id_user){
+        $user = 1;
+        $sql = $this->pdo->prepare("SELECT * FROM enderecos WHERE id_user = :id_user");
+        $sql->bindValue(':id_user',$id_user);
+        $sql->execute();
+        // WHERE id_user = :id_user
+        $datas = $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $datas;
+    }
+
 }

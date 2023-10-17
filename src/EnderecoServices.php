@@ -36,4 +36,8 @@ class EnderecoServices
        return $this->enderecoDao->list($id_user);
     }
 
+    public function listAllAdrass($id_user){
+        return $this->enderecoDao->listAll($id_user);
+    }
+
 }
