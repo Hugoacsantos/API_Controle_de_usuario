@@ -79,7 +79,7 @@ $app->get('/user/{id}', function(Request $request, Response $response, $args) us
     return $response->withStatus(200);
 });
 
-$app->get('/{id}', function(Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
+$app->get('endereco/{id}', function(Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
     $id = $args['id'];
     $user = $userServices->getWithAdress($id);
     $addres = $EnderecoServices->listAllAdrass($id);
@@ -88,7 +88,7 @@ $app->get('/{id}', function(Request $request, Response $response, $args) use ($u
 
 });
 
-$app->post('adress/create/{id}', function(Request $request, Response $response, $args) use($EnderecoServices) {
+$app->post('endereco/create/{id}', function(Request $request, Response $response, $args) use($EnderecoServices) {
     $iduser = $args['id'];
     $data = $request->getParsedBody();
     $rua = $data['rua'];
@@ -104,7 +104,7 @@ $app->post('adress/create/{id}', function(Request $request, Response $response, 
 
 });
 
-$app->delete('/delete/endereco/{id}', function (Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
+$app->delete('endereco/delete/{id}', function (Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
     $id = $args['id'];
     $user = $userServices->get($id);
     $EnderecoServices->find($user->id);
