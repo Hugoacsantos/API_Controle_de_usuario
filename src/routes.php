@@ -72,20 +72,22 @@ $app->get('/user/{id}', function(Request $request, Response $response, $args) us
     $endrecoDb = $EnderecoServices->find($id);
     $endereco = new Endereco($endrecoDb['id_user'],$endrecoDb['rua'],$endrecoDb['numero'],$endrecoDb['bairro'],$endrecoDb['cidade'],$endrecoDb['estado']);
     $endereco->id = $endrecoDb['id'];
-    $user = new User($useDb['id'],$useDb['nome'],$useDb['email'],$endereco);
+    $user = new User($useDb['id'],$useDb['name'],$useDb['email'],$endereco);
     
     print_r(json_encode($user));
     
     return $response->withStatus(200);
 });
 
-$app->get('endereco/{id}', function(Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
+// Endereços 
+
+
+$app->get('/endereco/{id}', function(Request $request, Response $response, $args) use ($userServices, $EnderecoServices) {
     $id = $args['id'];
     $user = $userServices->getWithAdress($id);
-    $addres = $EnderecoServices->listAllAdrass($id);
+    $endereco = $EnderecoServices->listAllAdrass($id);
     print_r(json_encode($user));
     return $response->withStatus(200);
-
 });
 
 $app->post('endereco/create/{id}', function(Request $request, Response $response, $args) use($EnderecoServices) {
