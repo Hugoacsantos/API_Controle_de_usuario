@@ -1,4 +1,4 @@
-# CRUD de simples com slimframework
+# CRUD simples com slimframework
 
 Crud de usuarios com injeção de dependencia e pattern DAO, feito com slimframework e com o servidor proprio do php 
 
